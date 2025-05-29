@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ananya Banik - Outlook Inbox</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  header {
+    background: #0078d4;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  }
+  header .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    user-select: none;
+  }
+  header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  header .user-info i {
+    font-size: 1.2rem;
+  }
+  .container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  nav.sidebar {
+    background: #fff;
+    width: 220px;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+  }
+  nav.sidebar .folder-list {
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  nav.sidebar .folder-list li {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    border-left: 4px solid transparent;
+    transition: background-color 0.2s;
+  }
+  nav.sidebar .folder-list li.active,
+  nav.sidebar .folder-list li:hover {
+    background-color: #e8f0fe;
+    color: #0078d4;
+    border-left-color: #0078d4;
+  }
+  nav.sidebar .folder-list li i {
+    font-size: 1.1rem;
+    min-width: 20px;
+    text-align: center;
+  }
+  nav.sidebar .folder-list li span {
+    user-select: none;
+  }
+  main.inbox {
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  main.inbox header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #ddd;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #0078d4;
+  }
+  .email-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .email-item {
+    display: flex;
+    padding: 0.85rem 1.5rem;
+    border-bottom: 1px solid #f1f1f1;
+    cursor: pointer;
+  }
+  .email-item:hover {
+    background-color: #e8f0fe;
+  }
+  .email-sender {
+    flex-basis: 140px;
+    font-weight: 600;
+    color: #0b3954;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .email-subject {
+    flex: 2;
+    font-weight: 700;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .email-snippet {
+    flex: 3;
+    color: #666;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 1rem;
+  }
+  .email-date {
+    flex-basis: 90px;
+    font-size: 0.8rem;
+    color: #999;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .badge-dxc {
+    color: #0078d4;
+    font-weight: 700;
+  }
+  .badge-manager {
+    color: #d9534f;
+    font-weight: 700;
+  }
+  .badge-hr {
+    color: #f0ad4e;
+    font-weight: 700;
+  }
+  .badge-employee {
+    color: #5cb85c;
+    font-weight: 700;
+  }
+  .badge-project {
+    color: #292b2c;
+    font-weight: 700;
+  }
+  @media (max-width: 700px) {
+    nav.sidebar {
+      width: 60px;
+    }
+    nav.sidebar .folder-list li span {
+      display: none;
+    }
+    .email-sender {
+      flex-basis: 90px;
+    }
+    .email-snippet {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">DXC Mail</div>
+  <div class="user-info" aria-label="User info">
+    <i class="fas fa-user-circle" title="User"></i>
+    <span>Ananya Banik</span>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="sidebar" aria-label="Email folders">
+    <ul class="folder-list" role="list">
+      <li class="active" tabindex="0" aria-current="page" role="listitem"><i class="fas fa-inbox"></i><span>Inbox</span></li>
+      <li tabindex="0" role="listitem"><i class="fas fa-star"></i><span>Starred</span></li>
+      <li tabindex="0" role="listitem"><i class="fas fa-paper-plane"></i><span>Sent</span></li>
+      <li tabindex="0" role="listitem"><i class="fas fa-file-alt"></i><span>Drafts</span></li>
+      <li tabindex="0" role="listitem"><i class="fas fa-trash"></i><span>Deleted</span></li>
+    </ul>
+  </nav>
+
+  <main class="inbox" role="main" aria-label="Inbox mail list">
+    <header>Inbox</header>
+    <div class="email-list" role="list" tabindex="0">
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-dxc" title="DXC Technology">DXC Technology</div>
+        <div class="email-subject">Quarterly Financial Update</div>
+        <div class="email-snippet">Please find attached the Q1 financial report for your review...</div>
+        <div class="email-date" aria-label="Received Apr 28, 2025">Apr 28</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-manager" title="Manager - John Smith">John Smith (Manager)</div>
+        <div class="email-subject">Project Meeting Follow-up</div>
+        <div class="email-snippet">Great progress on the analytics dashboard, let's discuss the next steps...</div>
+        <div class="email-date" aria-label="Received May 2, 2025">May 2</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-hr" title="HR Department">HR Department</div>
+        <div class="email-subject">Policy Update: Remote Work Guidelines</div>
+        <div class="email-snippet">Please review the updated guidelines regarding remote work effective June 1st...</div>
+        <div class="email-date" aria-label="Received May 3, 2025">May 3</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-employee" title="Employee - Priya Desai">Priya Desai (Employee)</div>
+        <div class="email-subject">Request for Data Access</div>
+        <div class="email-snippet">Can you grant me access to the latest customer behavior data set? Thank you!</div>
+        <div class="email-date" aria-label="Received May 5, 2025">May 5</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-project" title="Project Team">Project Analytics</div>
+        <div class="email-subject">Updated Model Results</div>
+        <div class="email-snippet">The new predictive model shows a 4% improvement in accuracy. Details inside...</div>
+        <div class="email-date" aria-label="Received May 6, 2025">May 6</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-dxc" title="DXC Technology">DXC Technology</div>
+        <div class="email-subject">Upcoming IT Maintenance</div>
+        <div class="email-snippet">Scheduled maintenance on May 10th from 12 AM to 4 AM UTC affecting network access.</div>
+        <div class="email-date" aria-label="Received May 7, 2025">May 7</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-manager" title="Manager - John Smith">John Smith (Manager)</div>
+        <div class="email-subject">Team Building Event</div>
+        <div class="email-snippet">Save the date: June 4th for an outdoor team building retreat. RSVP by May 20.</div>
+        <div class="email-date" aria-label="Received May 8, 2025">May 8</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-hr" title="HR Department">HR Department</div>
+        <div class="email-subject">Performance Review Schedule</div>
+        <div class="email-snippet">Your annual performance review will be held in the week of June 1-5. Please prepare.</div>
+        <div class="email-date" aria-label="Received May 9, 2025">May 9</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-employee" title="Employee - Rahul Singh">Rahul Singh (Employee)</div>
+        <div class="email-subject">Question about Data Analytics Tools</div>
+        <div class="email-snippet">Could you recommend some Python packages for advanced data visualization?</div>
+        <div class="email-date" aria-label="Received May 10, 2025">May 10</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-project" title="Project Team">Project Analytics</div>
+        <div class="email-subject">Next Sprint Planning</div>
+        <div class="email-snippet">The next sprint focuses on integration testing and deployment automation.</div>
+        <div class="email-date" aria-label="Received May 11, 2025">May 11</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-dxc" title="DXC Technology">DXC Technology</div>
+        <div class="email-subject">Annual Conference Invitation</div>
+        <div class="email-snippet">You are invited to participate in this year's international conference. Details enclosed.</div>
+        <div class="email-date" aria-label="Received May 12, 2025">May 12</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-hr" title="HR Department">HR Department</div>
+        <div class="email-subject">Updated Employee Benefits Package</div>
+        <div class="email-snippet">Changes to health insurance and pension plans effective July 1, 2025.</div>
+        <div class="email-date" aria-label="Received May 13, 2025">May 13</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-manager" title="Manager - John Smith">John Smith (Manager)</div>
+        <div class="email-subject">Project Deadline Reminder</div>
+        <div class="email-snippet">Please submit all project deliverables by May 25, 2025.</div>
+        <div class="email-date" aria-label="Received May 14, 2025">May 14</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-employee" title="Employee - Ankit Patel">Ankit Patel (Employee)</div>
+        <div class="email-subject">Request for Remote Work Equipment</div>
+        <div class="email-snippet">I would like to request a second monitor and noise-cancelling headphones.</div>
+        <div class="email-date" aria-label="Received May 15, 2025">May 15</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-project" title="Project Team">Project Analytics</div>
+        <div class="email-subject">Bug Fixes Report</div>
+        <div class="email-snippet">List of recently resolved bugs and ongoing issues.</div>
+        <div class="email-date" aria-label="Received May 16, 2025">May 16</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-manager" title="Manager - Sarah Lee">Sarah Lee (Manager)</div>
+        <div class="email-subject">Budget Allocation Discussion</div>
+        <div class="email-snippet">We need to review the Q3 budget allocations in next week's meeting.</div>
+        <div class="email-date" aria-label="Received May 17, 2025">May 17</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-hr" title="HR Department">HR Department</div>
+        <div class="email-subject">Mandatory Compliance Training</div>
+        <div class="email-snippet">Complete your annual compliance training by June 15, 2025.</div>
+        <div class="email-date" aria-label="Received May 18, 2025">May 18</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-employee" title="Employee - Maya Kumar">Maya Kumar (Employee)</div>
+        <div class="email-subject">Schedule Change Request</div>
+        <div class="email-snippet">Requesting to adjust my work hours from 9am-6pm to 8am-5pm.</div>
+        <div class="email-date" aria-label="Received May 19, 2025">May 19</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-project" title="Project Team">Project Analytics</div>
+        <div class="email-subject">Performance Benchmarking Data</div>
+        <div class="email-snippet">Attached are the benchmark results for the new algorithm version.</div>
+        <div class="email-date" aria-label="Received May 20, 2025">May 20</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-dxc" title="DXC Technology">DXC Technology</div>
+        <div class="email-subject">IT Security Advisory</div>
+        <div class="email-snippet">Updated IT security policies and recommended best practices.</div>
+        <div class="email-date" aria-label="Received May 21, 2025">May 21</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-manager" title="Manager - John Smith">John Smith (Manager)</div>
+        <div class="email-subject">Client Feedback Summary</div>
+        <div class="email-snippet">Summary of recent client feedback on project deliverables.</div>
+        <div class="email-date" aria-label="Received May 22, 2025">May 22</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-hr" title="HR Department">HR Department</div>
+        <div class="email-subject">Office Reopening Plan</div>
+        <div class="email-snippet">Details about phased office reopening starting July 2025.</div>
+        <div class="email-date" aria-label="Received May 23, 2025">May 23</div>
+      </div>
+      <div class="email-item" role="listitem" tabindex="0">
+        <div class="email-sender badge-employee" title="Employee - Tanya Joseph">Tanya Joseph (Employee)</div>
+        <div class="email-subject">Training Feedback</div>
+        <div class="email-snippet">Sharing my feedback on last week’s data visualization workshop.</div>
+        <div class="email-date" aria-label="Received May 24, 2025">May 24</div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
+

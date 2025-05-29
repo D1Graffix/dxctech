@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ananya Banik - Personal Dashboard</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-papb8+6r6G9HWvlNkxj+vTULQDYk7fFhSxn5bNLnYtxtgqHBTQ6VvQ+M6GaswF13BKhF4FZMlY46jZJ3wZ2h1g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafc;
+    color: #242526;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Header */
+  header {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .company-logo {
+    width: 60px;
+    height: 60px;
+    background-color: #0067b8;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 900;
+    font-size: 1.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.2em;
+    user-select: none;
+    box-shadow: 0 4px 14px rgb(0 103 184 / 0.3);
+  }
+  .header-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  .job-title {
+    color: #4a4a4a;
+    font-size: 0.9rem;
+  }
+  .join-date {
+    background-color: #e6f0fb;
+    color: #316fce;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+  }
+
+  /* Layout */
+  .container {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 88px - 40px);
+    gap: 1rem;
+    padding: 1rem 2rem;
+  }
+
+  /* Sidebar */
+  nav.sidebar {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.07);
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+  nav.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  nav.sidebar li {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #4a4a4a;
+    transition: background-color 0.25s, color 0.25s;
+  }
+  nav.sidebar li:hover,
+  nav.sidebar li.active {
+    background-color: #4a90e2;
+    color: white;
+  }
+  nav.sidebar li i {
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  /* Main content */
+  main.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Welcome message */
+  .welcome-message {
+    background: #4a90e2;
+    color: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgb(74 144 226 / 0.3);
+  }
+
+  /* Summary card */
+  .summary-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.07);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .summary-item {
+    background: #f4f8fd;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    box-shadow: inset 0 0 6px rgb(74 144 226 / 0.1);
+  }
+  .summary-item h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2e3a59;
+  }
+  .summary-item p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4a90e2;
+    margin: 0;
+  }
+
+  /* Analytics chart */
+  .analytics {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.07);
+  }
+  .analytics h2 {
+    margin-top: 0;
+    font-weight: 700;
+    color: #2e3a59;
+  }
+  #chart {
+    margin-top: 1rem;
+    width: 100%;
+    height: 240px;
+  }
+
+  /* Reports table */
+  .reports {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.07);
+    overflow-x: auto;
+  }
+  .reports h2 {
+    margin-top: 0;
+    font-weight: 700;
+    color: #2e3a59;
+    margin-bottom: 1rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  thead {
+    background-color: #e6f0fb;
+  }
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+  th {
+    color: #316fce;
+    font-weight: 700;
+    border-bottom: 2px solid #b8d0fb;
+  }
+  tbody tr {
+    border-bottom: 1px solid #eee;
+  }
+  tbody tr:hover {
+    background-color: #f4f8fd;
+  }
+
+  /* Footer */
+  footer {
+    background: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #7a7a7a;
+    padding: 1rem 0;
+    box-shadow: 0 -2px 5px rgb(0 0 0 / 0.03);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .container {
+      grid-template-columns: 70px 1fr;
+      padding: 1rem;
+    }
+    nav.sidebar li {
+      justify-content: center;
+      padding: 0.75rem 0;
+      font-size: 0;
+    }
+    nav.sidebar li i {
+      font-size: 1.3rem;
+      min-width: auto;
+    }
+    nav.sidebar li span {
+      display: none;
+    }
+  }
+  @media (max-width: 560px) {
+    header {
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .header-info {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .join-date {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+    }
+    .container {
+      grid-template-columns: 1fr;
+      padding: 1rem 0.5rem;
+    }
+    nav.sidebar {
+      flex-direction: row;
+      border-radius: 0;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      box-shadow: none;
+      margin-bottom: 1rem;
+    }
+    nav.sidebar li {
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
+      justify-content: center;
+    }
+    nav.sidebar li span {
+      display: inline;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-info">
+    <div class="company-logo" aria-label="DXC Technology logo" title="DXC Technology">
+      DXC
+    </div>
+    <div class="header-text">
+      <div class="name">Ananya Banik</div>
+      <div class="job-title">Data Analyst at DXC Technology</div>
+    </div>
+  </div>
+  <div class="join-date" aria-label="Join date">
+    Joined April 2025
+  </div>
+</header>
+
+<div class="container">
+  <nav class="sidebar" aria-label="Main navigation">
+    <ul>
+      <li class="active" tabindex="0">
+        <i class="fas fa-home" aria-hidden="true"></i> <span>Home</span>
+      </li>
+      <li tabindex="0">
+        <i class="fas fa-folder-open" aria-hidden="true"></i> <span>My Projects</span>
+      </li>
+      <li tabindex="0">
+        <i class="fas fa-chart-line" aria-hidden="true"></i> <span>Reports</span>
+      </li>
+      <li tabindex="0">
+        <i class="fas fa-brain" aria-hidden="true"></i> <span>Skills</span>
+      </li>
+      <li tabindex="0">
+        <i class="fas fa-calendar-alt" aria-hidden="true"></i> <span>Work Calendar</span>
+      </li>
+      <li tabindex="0">
+        <i class="fas fa-book" aria-hidden="true"></i> <span>Resources</span>
+      </li>
+      <li tabindex="0">
+        <i class="fas fa-envelope" aria-hidden="true"></i> <span>Contact HR</span>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="content" role="main">
+    <section class="welcome-message" aria-label="Welcome message">
+      Welcome back, Ananya! Here's a quick overview of your dashboard.
+    </section>
+
+    <section class="summary-card" aria-label="Summary of current tasks and projects">
+      <article class="summary-item" aria-label="Current Tasks">
+        <h3><i class="fas fa-tasks" aria-hidden="true"></i> Current Tasks</h3>
+        <p>5</p>
+      </article>
+      <article class="summary-item" aria-label="Project Status">
+        <h3><i class="fas fa-project-diagram" aria-hidden="true"></i> Project Status</h3>
+        <p>3 Active</p>
+      </article>
+      <article class="summary-item" aria-label="Pending Approvals">
+        <h3><i class="fas fa-hourglass-half" aria-hidden="true"></i> Pending Approvals</h3>
+        <p>2</p>
+      </article>
+    </section>
+
+    <section class="analytics" aria-label="Analytics and report summaries">
+      <h2>Analytics Summary</h2>
+      <canvas id="chart" role="img" aria-label="Analytics bar chart"></canvas>
+    </section>
+
+    <section class="reports" aria-label="Recent reports and work updates">
+      <h2>Recent Reports</h2>
+      <table role="table" aria-describedby="recent-reports-summary">
+        <thead>
+          <tr>
+            <th scope="col">Report Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sales Performance Q1</td>
+            <td>Apr 15, 2025</td>
+            <td><span style="color: #27ae60; font-weight: 600;">Completed</span></td>
+            <td>Reviewed by management</td>
+          </tr>
+          <tr>
+            <td>Customer Insights April</td>
+            <td>Apr 20, 2025</td>
+            <td><span style="color: #f39c12; font-weight: 600;">In Progress</span></td>
+            <td>Data collection ongoing</td>
+          </tr>
+          <tr>
+            <td>Market Trends 2025</td>
+            <td>Apr 10, 2025</td>
+            <td><span style="color: #27ae60; font-weight: 600;">Completed</span></td>
+            <td>Published report</td>
+          </tr>
+          <tr>
+            <td>Expense Analysis</td>
+            <td>Apr 22, 2025</td>
+            <td><span style="color: #c0392b; font-weight: 600;">Delayed</span></td>
+            <td>Awaiting data validation</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<footer>
+  &copy; 2025 DXC Technology
+</footer>
+
+<script>
+  (() => {
+    // Simple bar chart inside canvas for Analytics section
+    const data = [65, 49, 80, 81, 56, 55, 40];
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    const canvas = document.getElementById('chart');
+    const ctx = canvas.getContext('2d');
+
+    // Resize canvas to container width
+    function resize() {
+      canvas.width = canvas.clientWidth * devicePixelRatio;
+      canvas.height = canvas.clientHeight * devicePixelRatio;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      drawChart();
+    }
+
+    function drawChart() {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const padding = 40;
+      const barWidth = (width - padding * 2) / data.length * 0.6;
+      const maxData = Math.max(...data);
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw axes
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#999';
+      ctx.beginPath();
+      // y axis line
+      ctx.moveTo(padding, padding / 2);
+      ctx.lineTo(padding, height - padding);
+      // x axis line
+      ctx.lineTo(width - padding / 2, height - padding);
+      ctx.stroke();
+      ctx.closePath();
+
+      // Draw bars
+      ctx.fillStyle = '#4a90e2';
+      for (let i = 0; i < data.length; i++) {
+        const barHeight = ((height - padding * 2) * (data[i] / maxData));
+        const x = padding + i * ((width - padding * 2) / data.length) + ((width - padding * 2) / data.length - barWidth) / 2;
+        const y = height - padding - barHeight;
+        // bar rect
+        ctx.fillRect(x, y, barWidth, barHeight);
+        // label text below bar
+        ctx.fillStyle = '#242526';
+        ctx.font = '12px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(labels[i], x + barWidth / 2, height - padding + 15);
+        ctx.fillStyle = '#4a90e2';
+      }
+      // y axis labels (0, max)
+      ctx.fillStyle = '#999';
+      ctx.font = '11px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('0', padding - 5, height - padding + 4);
+      ctx.fillText(maxData.toString(), padding - 5, padding / 1.5);
+    }
+
+    window.addEventListener('resize', resize);
+    // Initial draw
+    resize();
+  })();
+</script>
+</body>
+</html>
+

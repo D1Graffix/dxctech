@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ananya Banik - Work Calendar</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-papb8+6r6G9HWvlNkxj+vTULQDYk7fFhSxn5bNLnYtxtgqHBTQ6VvQ+M6GaswF13BKhF4FZMlY46jZJ3wZ2h1g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafc;
+    color: #242526;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: #4a90e2;
+  }
+  button:focus {
+    outline: 2px solid #4a90e2;
+  }
+
+  /* Header */
+  header {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .company-logo {
+    width: 60px;
+    height: 60px;
+    background-color: #0067b8;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 900;
+    font-size: 1.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.2em;
+    user-select: none;
+    box-shadow: 0 4px 14px rgb(0 103 184 / 0.3);
+  }
+  .header-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  .job-title {
+    color: #4a4a4a;
+    font-size: 0.9rem;
+  }
+  .join-date {
+    background-color: #e6f0fb;
+    color: #316fce;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+  }
+
+  /* Layout */
+  .container {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 88px - 40px);
+    gap: 1rem;
+    padding: 1rem 2rem;
+  }
+
+  /* Sidebar */
+  nav.sidebar {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.07);
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+  nav.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  nav.sidebar li {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #4a4a4a;
+    transition: background-color 0.25s, color 0.25s;
+  }
+  nav.sidebar li:hover,
+  nav.sidebar li.active {
+    background-color: #4a90e2;
+    color: white;
+  }
+  nav.sidebar li i {
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  nav.sidebar li span {
+    user-select: none;
+  }
+
+  /* Main content */
+  main.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Page title */
+  .page-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #2e3a59;
+    border-bottom: 3px solid #4a90e2;
+    padding-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Calendar */
+  .calendar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .calendar-nav button {
+    background-color: #4a90e2;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgb(74 144 226 / 0.3);
+    transition: background-color 0.3s;
+  }
+  .calendar-nav button:hover {
+    background-color: #3578e5;
+  }
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.07);
+    overflow: hidden;
+  }
+  .calendar-table thead tr {
+    background-color: #e6f0fb;
+  }
+  .calendar-table th, .calendar-table td {
+    width: 14.2857%;
+    text-align: center;
+    padding: 0.75rem 0.25rem;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    height: 100px;
+    position: relative;
+  }
+  .calendar-table th {
+    color: #316fce;
+    font-weight: 700;
+  }
+  .day-number {
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    font-weight: 600;
+    color: #4a90e2;
+  }
+  .event {
+    margin-top: 22px;
+    background-color: #4a90e2;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    cursor: default;
+    user-select: none;
+  }
+
+  /* Footer */
+  footer {
+    background: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #7a7a7a;
+    padding: 1rem 0;
+    box-shadow: 0 -2px 5px rgb(0 0 0 / 0.03);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .container {
+      grid-template-columns: 70px 1fr;
+      padding: 1rem;
+    }
+    nav.sidebar li {
+      justify-content: center;
+      padding: 0.75rem 0;
+      font-size: 0;
+    }
+    nav.sidebar li i {
+      font-size: 1.3rem;
+      min-width: auto;
+    }
+    nav.sidebar li span {
+      display: none;
+    }
+  }
+  @media (max-width: 560px) {
+    header {
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .header-info {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .join-date {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+    }
+    .container {
+      grid-template-columns: 1fr;
+      padding: 1rem 0.5rem;
+    }
+    nav.sidebar {
+      flex-direction: row;
+      border-radius: 0;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      box-shadow: none;
+      margin-bottom: 1rem;
+    }
+    nav.sidebar li {
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
+      justify-content: center;
+    }
+    nav.sidebar li span {
+      display: inline;
+    }
+    .calendar-table th, .calendar-table td {
+      height: 80px;
+      padding: 0.5rem 0.25rem;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-info">
+    <div class="company-logo" aria-label="DXC Technology logo" title="DXC Technology">
+      DXC
+    </div>
+    <div class="header-text">
+      <div class="name">Ananya Banik</div>
+      <div class="job-title">Data Analyst at DXC Technology</div>
+    </div>
+  </div>
+  <div class="join-date" aria-label="Join date">
+    Joined April 2025
+  </div>
+</header>
+
+<div class="container">
+  <nav class="sidebar" aria-label="Main navigation">
+    <ul>
+      <li tabindex="0">
+        <a href="dashboard.html" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-home" aria-hidden="true"></i><span>Home</span>
+        </a>
+      </li>
+      <li tabindex="0">
+        <a href="myprojects.html" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-folder-open" aria-hidden="true"></i><span>My Projects</span>
+        </a>
+      </li>
+      <li tabindex="0">
+        <a href="reports.html" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-chart-line" aria-hidden="true"></i><span>Reports</span>
+        </a>
+      </li>
+      <li tabindex="0">
+        <a href="dashboard.html#skills" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-brain" aria-hidden="true"></i><span>Skills</span>
+        </a>
+      </li>
+      <li class="active" tabindex="0" aria-current="page">
+        <a href="workcalendar.html" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-calendar-alt" aria-hidden="true"></i><span>Work Calendar</span>
+        </a>
+      </li>
+      <li tabindex="0">
+        <a href="dashboard.html#resources" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-book" aria-hidden="true"></i><span>Resources</span>
+        </a>
+      </li>
+      <li tabindex="0">
+        <a href="dashboard.html#contact-hr" style="display:flex; align-items:center; gap:1rem; color:inherit; width:100%;">
+          <i class="fas fa-envelope" aria-hidden="true"></i><span>Contact HR</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="content" role="main" aria-labelledby="page-title">
+    <h1 class="page-title" id="page-title"><i class="fas fa-calendar-alt"></i> Work Calendar</h1>
+    <div class="calendar-nav" aria-label="Calendar navigation">
+      <button id="prevMonthBtn" aria-label="Previous Month"><i class="fas fa-chevron-left"></i></button>
+      <div id="monthYearDisplay" aria-live="polite" aria-atomic="true" style="font-weight:700; font-size:1.2rem; color:#4a90e2;"></div>
+      <button id="nextMonthBtn" aria-label="Next Month"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <table class="calendar-table" role="grid" aria-labelledby="monthYearDisplay">
+      <thead>
+        <tr>
+          <th scope="col">Sun</th>
+          <th scope="col">Mon</th>
+          <th scope="col">Tue</th>
+          <th scope="col">Wed</th>
+          <th scope="col">Thu</th>
+          <th scope="col">Fri</th>
+          <th scope="col">Sat</th>
+        </tr>
+      </thead>
+      <tbody id="calendarBody" role="rowgroup">
+        <!-- Calendar days will be generated by JS -->
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<footer>
+  &copy; 2025 DXC Technology
+</footer>
+
+<script>
+  (() => {
+    const calendarBody = document.getElementById('calendarBody');
+    const monthYearDisplay = document.getElementById('monthYearDisplay');
+    const prevMonthBtn = document.getElementById('prevMonthBtn');
+    const nextMonthBtn = document.getElementById('nextMonthBtn');
+
+    // We'll limit calendar months to May and June 2025
+    const minMonth = 4; // May = month 4 in JS Date (0-based)
+    const maxMonth = 5; // June
+
+    let currentYear = 2025;
+    let currentMonth = minMonth;
+
+    const events = {
+      // Format: 'YYYY-MM-DD': [{title:'Event Title'}...]
+      '2025-05-03': [{title:'Team Meeting'}],
+      '2025-05-07': [{title:'Project Deadline'}],
+      '2025-05-14': [{title:'Client Presentation'}],
+      '2025-05-20': [{title:'Training Session'}],
+      '2025-05-28': [{title:'Performance Review'}],
+      '2025-06-02': [{title:'Milestone Check'}],
+      '2025-06-08': [{title:'Company Event'}]
+    };
+
+    function generateCalendar(year, month) {
+      // Clear existing
+      calendarBody.innerHTML = '';
+
+      // Display month and year
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      monthYearDisplay.textContent = `${monthNames[month]} ${year}`;
+
+      // Get first day of month (weekday)
+      const firstDay = new Date(year, month, 1).getDay();
+      // Get number of days in month
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      let dayCounter = 1;
+      const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+      for(let i=0; i<totalCells; i++) {
+        if(i % 7 === 0) {
+          var row = document.createElement('tr');
+          calendarBody.appendChild(row);
+        }
+        const cell = document.createElement('td');
+        cell.setAttribute('role', 'gridcell');
+        if(i >= firstDay && dayCounter <= daysInMonth) {
+          const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(dayCounter).padStart(2,'0')}`;
+          const dayNumberEl = document.createElement('div');
+          dayNumberEl.textContent = dayCounter;
+          dayNumberEl.className = 'day-number';
+          cell.appendChild(dayNumberEl);
+
+          // add events if any
+          if(events[dateStr]) {
+            events[dateStr].forEach(ev=>{
+              const evEl = document.createElement('div');
+              evEl.className = 'event';
+              evEl.textContent = ev.title;
+              cell.appendChild(evEl);
+            });
+          }
+          dayCounter++;
+        }
+        row.appendChild(cell);
+      }
+    }
+
+    function updateCalendar(direction) {
+      if(direction === 'prev') {
+        if(currentMonth > minMonth) currentMonth--;
+      } else if(direction === 'next') {
+        if(currentMonth < maxMonth) currentMonth++;
+      }
+      generateCalendar(currentYear, currentMonth);
+    }
+
+    prevMonthBtn.addEventListener('click', () => updateCalendar('prev'));
+    nextMonthBtn.addEventListener('click', () => updateCalendar('next'));
+
+    // Initialize calendar
+    generateCalendar(currentYear, currentMonth);
+  })();
+</script>
+
+</body>
+</html>

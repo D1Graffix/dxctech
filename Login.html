@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login - DXC Technology Dashboard</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-papb8+6r6G9HWvlNkxj+vTULQDYk7fFhSxn5bNLnYtxtgqHBTQ6VvQ+M6GaswF13BKhF4FZMlY46jZJ3wZ2h1g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f8fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #242526;
+  }
+  .login-container {
+    background: white;
+    padding: 2.5rem 3rem 3rem;
+    width: 320px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgb(74 144 226 / 0.2);
+  }
+  .logo {
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: #0067b8;
+    text-align: center;
+    letter-spacing: 0.18em;
+    margin-bottom: 1.75rem;
+    user-select: none;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #2e3a59;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: #4a4a4a;
+  }
+  input[type="text"], input[type="password"] {
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    border: 1.8px solid #ced4da;
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.25s;
+  }
+  input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74,144,226,0.5);
+  }
+  button {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.25s;
+  }
+  button:hover {
+    background-color: #3578e5;
+  }
+  .error-msg {
+    color: #c0392b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    display: none;
+    user-select: none;
+  }
+
+  @media (max-width: 380px) {
+    .login-container {
+      width: 90vw;
+      padding: 2rem 2rem 2.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="login-container" role="main" aria-labelledby="login-title">
+  <div class="logo" aria-label="DXC Technology logo">DXC</div>
+  <h2 id="login-title">Employee Login</h2>
+  <form id="loginForm" novalidate>
+    <label for="employeeId">Employee ID</label>
+    <input type="text" id="employeeId" name="employeeId" autocomplete="username" required aria-required="true" aria-describedby="employeeIdHelp" />
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required aria-required="true" aria-describedby="passwordHelp" />
+    <div class="error-msg" id="errorMsg" role="alert" aria-live="assertive"></div>
+    <button type="submit" aria-label="Login to dashboard">Login <i class="fas fa-sign-in-alt"></i></button>
+  </form>
+</div>
+
+<script>
+  (function() {
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const validEmployeeId = 'BanikA';
+    const validPassword = 'BanikA123';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorMsg.style.display = 'none';
+      const employeeId = form.employeeId.value.trim();
+      const password = form.password.value;
+
+      if (employeeId === validEmployeeId && password === validPassword) {
+        // Redirect to index.html
+        window.location.href = 'index.html';
+      } else {
+        errorMsg.textContent = 'Invalid Employee ID or Password.';
+        errorMsg.style.display = 'block';
+        form.password.value = '';
+        form.password.focus();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ananya Banik - Online Status & IT Dashboard</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff;
+    color: #000;
+    margin: 20px;
+  }
+  header {
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  .status {
+    margin-top: 5px;
+    font-weight: bold;
+    color: green;
+  }
+  section {
+    margin-bottom: 30px;
+  }
+  h2 {
+    font-size: 20px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    font-family: monospace;
+    border: 1px solid #000;
+    padding: 5px 8px;
+    text-align: right;
+  }
+  th {
+    background-color: #ddd;
+    font-weight: bold;
+  }
+  pre {
+    background-color: #eee;
+    padding: 10px;
+    border: 1px solid #000;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 13px;
+  }
+  ul {
+    margin-top: 5px;
+  }
+  ul li {
+    margin-bottom: 3px;
+  }
+  .important {
+    color: #b55300;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ananya Banik</h1>
+  <div class="status" aria-live="polite">Status: Online</div>
+</header>
+
+<section aria-label="System Information and Metrics">
+  <h2>System Info & Metrics</h2>
+  <p><b>CPU Usage</b></p>
+  <p>Current Load Average: 2.73</p>
+  <p>Core Temperatures (°C):</p>
+  <ul>
+    <li>Core 0: 58</li>
+    <li>Core 1: 62</li>
+    <li>Core 2: 59</li>
+    <li>Core 3: 61</li>
+  </ul>
+
+  <p><b>Memory Usage</b></p>
+  <table aria-label="Memory usage table">
+    <thead>
+      <tr><th>Type</th><th>Used (GB)</th><th>Total (GB)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>RAM</td><td>11.2</td><td>16.0</td></tr>
+      <tr><td>Swap</td><td>0.5</td><td>2.0</td></tr>
+    </tbody>
+  </table>
+
+  <p><b>Disk Usage</b></p>
+  <table aria-label="Disk usage table">
+    <thead>
+      <tr><th>Partition</th><th>Used (GB)</th><th>Total (GB)</th><th>Usage %</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>/</td><td>120</td><td>250</td><td>48%</td></tr>
+      <tr><td>/home</td><td>320</td><td>500</td><td>64%</td></tr>
+      <tr><td>/var</td><td>45</td><td>100</td><td>45%</td></tr>
+    </tbody>
+  </table>
+
+  <p><b>Network Interfaces</b></p>
+  <ul>
+    <li>eth0: 1.2 Gbps up / 1.0 Gbps down</li>
+    <li>wlan0: 300 Mbps up / 150 Mbps down</li>
+  </ul>
+  <p>Active IP: 192.168.1.25</p>
+</section>
+
+<section aria-label="Python Code Snippets">
+  <h2>Python Code Snippets</h2>
+
+  <p><b>Data Processing Pipeline</b></p>
+  <pre><code>import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+
+def preprocess_data(df):
+    scaler = MinMaxScaler()
+    scaled = scaler.fit_transform(df.select_dtypes(include=[np.number]))
+    df_scaled = pd.DataFrame(scaled, columns=df.select_dtypes(include=[np.number]).columns)
+    df[df_scaled.columns] = df_scaled
+    return df
+
+# Usage example
+# df = pd.read_csv('data.csv')
+# df_processed = preprocess_data(df)
+</code></pre>
+
+  <p><b>Gradient Boosting Classifier Training</b></p>
+  <pre><code>from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+
+gbc = GradientBoostingClassifier(n_estimators=150, learning_rate=0.05, max_depth=4)
+gbc.fit(X_train, y_train)
+
+y_pred = gbc.predict(X_test)
+acc = accuracy_score(y_test, y_pred)
+print(f'Validation accuracy: {acc:.4f}')
+</code></pre>
+
+  <p><b>Custom Feature Engineering</b></p>
+  <pre><code>def feature_derivative(series):
+    '''Compute numerical first derivative of pandas Series'''
+    return series.diff().fillna(0)
+
+# Example usage:
+# df['feature_delta'] = feature_derivative(df['sensor_reading'])
+</code></pre>
+
+  <p><b>Matplotlib Visualization</b></p>
+  <pre><code>import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8,4))
+plt.plot(df['time'], df['sensor_reading'], label='Sensor Reading')
+plt.title('Sensor Reading Over Time')
+plt.xlabel('Time')
+plt.ylabel('Value')
+plt.legend()
+plt.grid(True)
+plt.show()
+</code></pre>
+</section>
+
+</body>
+</html>
+

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multi-Modal Sensor Data Fusion & Predictive Modeling - Ananya Banik | DXC Technology</title>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-papb8+6r6G9HWvlNkxj+vTULQDYk7fFhSxn5bNLnYtxtgqHBTQ6VvQ+M6GaswF13BKhF4FZMlY46jZJ3wZ2h1g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #121212;
+    color: #d0d0d0;
+    line-height: 1.4;
+    padding: 1rem 2rem;
+  }
+  h1, h2, h3 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #82caff;
+    margin-top: 0;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.3rem;
+  }
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #57a3ff;
+    padding-bottom: 0.3rem;
+  }
+  h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.3rem;
+    color: #a0d8ff;
+  }
+  p, li {
+    font-size: 0.95rem;
+  }
+  code, pre {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #222;
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    display: block;
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+  th, td {
+    border: 1px solid #333;
+    padding: 0.4rem 0.7rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  th {
+    background: #222;
+    color: #82caff;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background-color: #1a1a1a;
+  }
+  .container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  .complex-box {
+    background-color: #1f1f1f;
+    border: 1px solid #444;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+  }
+  .nested-list {
+    color: #9ecaff;
+    margin-left: 1.2rem;
+  }
+  ul {
+    list-style-type: square;
+  }
+  .important {
+    color: #ff8c00;
+    font-weight: 700;
+  }
+  .complex-chart {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(45deg, #112233 25%, #223344 25%, #223344 50%, #112233 50%, #112233 75%, #223344 75%, #223344 100%);
+    background-size: 40px 40px;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .complex-chart span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #57a3ff;
+    font-weight: 700;
+    font-size: 1.5rem;
+    user-select: none;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+</style>
+</head>
+<body>
+<div class="container" role="main" aria-label="Complex Data Science Project by Ananya Banik at DXC Technology">
+  <header style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem;">
+    <div style="background:#0067b8; width:60px; height:60px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:1.8rem; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; letter-spacing:0.2em; user-select:none; box-shadow:0 4px 14px rgb(0 103 184 / 0.3);">DXC</div>
+    <div>
+      <h1>Multi-Modal Sensor Data Fusion & Predictive Modeling</h1>
+      <p style="color:#7a7a7a; font-size:0.9rem; margin:0;">Data Analyst: Ananya Banik | DXC Technology | Joined April 2025</p>
+    </div>
+  </header>
+  
+  <section>
+    <h2>Dataset Preview</h2>
+    <table aria-label="Sensor dataset preview">
+      <thead>
+        <tr>
+          <th>Sample ID</th>
+          <th>Sensor_A_Reading</th>
+          <th>Sensor_B_Reading</th>
+          <th>Timestamp</th>
+          <th>Binary_Flag</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0001</td><td>0.684</td><td>12.43</td><td>2025-04-01 08:12:35</td><td>1</td><td>A</td></tr>
+        <tr><td>0002</td><td>0.435</td><td>14.01</td><td>2025-04-01 08:12:37</td><td>0</td><td>B</td></tr>
+        <tr><td>0003</td><td>0.712</td><td>13.75</td><td>2025-04-01 08:12:40</td><td>1</td><td>A</td></tr>
+        <tr><td>0004</td><td>0.129</td><td>15.02</td><td>2025-04-01 08:12:45</td><td>1</td><td>C</td></tr>
+        <tr><td>0005</td><td>0.954</td><td>11.98</td><td>2025-04-01 08:12:48</td><td>0</td><td>B</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Data Transformation Pipeline (Python)</h2>
+    <div class="complex-box">
+<pre><code>import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from scipy.signal import savgol_filter
+
+df = pd.read_csv('complex_data.csv')
+
+scaler = StandardScaler()
+df['Sensor_A_Norm'] = scaler.fit_transform(df[['Sensor_A_Reading']])
+df['Sensor_B_Norm'] = scaler.fit_transform(df[['Sensor_B_Reading']])
+
+df['Sensor_A_Smooth'] = savgol_filter(df['Sensor_A_Norm'], window_length=7, polyorder=3)
+df['Sensor_B_Smooth'] = savgol_filter(df['Sensor_B_Norm'], window_length=7, polyorder=3)
+
+df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+df['Time_Delta'] = (df['Timestamp'] - df['Timestamp'].shift()).dt.total_seconds().fillna(0)
+df['Sensor_A_Delta'] = np.gradient(df['Sensor_A_Smooth'])
+df['Sensor_B_Delta'] = np.gradient(df['Sensor_B_Smooth'])
+
+features = df[['Sensor_A_Smooth', 'Sensor_B_Smooth', 'Sensor_A_Delta', 'Sensor_B_Delta', 'Time_Delta']].copy()
+</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Model Training Snippet (Python)</h2>
+    <div class="complex-box">
+<pre><code>from sklearn.model_selection import GridSearchCV, StratifiedKFold
+from sklearn.ensemble import GradientBoostingClassifier
+
+cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
+
+param_grid = {
+    'n_estimators': [100, 200, 300],
+    'learning_rate': [0.001, 0.01, 0.1],
+    'max_depth': [3, 5, 7],
+    'subsample': [0.7, 1.0]
+}
+
+gbc = GradientBoostingClassifier(random_state=42)
+
+grid_search = GridSearchCV(estimator=gbc, param_grid=param_grid,
+                           cv=cv, scoring='roc_auc', n_jobs=-1)
+grid_search.fit(features, df['Binary_Flag'])
+
+print(f"Best parameters: {grid_search.best_params_}")
+print(f"Best ROC AUC: {grid_search.best_score_:.4f}")
+</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Model Performance Metrics</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Training Score</th>
+          <th>Validation Score</th>
+          <th>95% CI Lower</th>
+          <th>95% CI Upper</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>ROC AUC</td><td>0.915</td><td>0.892</td><td>0.880</td><td>0.904</td><td>-</td></tr>
+        <tr><td>Precision</td><td>0.882</td><td>0.864</td><td>0.850</td><td>0.879</td><td>Stable across folds</td></tr>
+        <tr><td>Recall</td><td>0.799</td><td>0.781</td><td>0.765</td><td>0.796</td><td>Some class imbalance</td></tr>
+        <tr><td>F1-Score</td><td>0.838</td><td>0.819</td><td>0.805</td><td>0.833</td><td>-</td></tr>
+        <tr><td>Log-loss</td><td>0.310</td><td>0.355</td><td>0.340</td><td>0.370</td><td>Improved with subsample=0.7</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Confusion Matrix & Diagnostics</h2>
+    <div class="complex-box">
+<pre><code>from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+y_true = df['Binary_Flag']
+y_pred = grid_search.predict(features)
+
+cm = confusion_matrix(y_true, y_pred)
+tn, fp, fn, tp = cm.ravel()
+
+print(f"Confusion Matrix:\\n{cm}")
+print(f"True Negatives: {tn}, False Positives: {fp}")
+print(f"False Negatives: {fn}, True Positives: {tp}")
+
+plt.figure(figsize=(6,6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Predicted 0', 'Predicted 1'],
+            yticklabels=['Actual 0', 'Actual 1'])
+plt.title('Confusion Matrix')
+plt.show()</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Summary Statistics</h2>
+    <table style="max-width: 700px;">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Mean</th>
+          <th>Std Dev</th>
+          <th>Min</th>
+          <th>25%ile</th>
+          <th>Median</th>
+          <th>75%ile</th>
+          <th>Max</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sensor_A_Smooth</td><td>0.002</td><td>0.978</td><td>-2.14</td><td>-0.68</td><td>0.02</td><td>0.72</td><td>2.16</td></tr>
+        <tr><td>Sensor_B_Smooth</td><td>0.001</td><td>1.002</td><td>-2.23</td><td>-0.65</td><td>0.01</td><td>0.70</td><td>2.19</td></tr>
+        <tr><td>Sensor_A_Delta</td><td>0.000</td><td>0.101</td><td>-0.24</td><td>-0.05</td><td>0.00</td><td>0.05</td><td>0.23</td></tr>
+        <tr><td>Sensor_B_Delta</td><td>0.000</td><td>0.110</td><td>-0.25</td><td>-0.06</td><td>0.01</td><td>0.06</td><td>0.24</td></tr>
+        <tr><td>Time_Delta</td><td>2.00</td><td>0.30</td><td>1.70</td><td>1.80</td><td>2.00</td><td>2.20</td><td>2.70</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Custom Transformation Function</h2>
+    <div class="complex-box">
+<pre><code>def complex_transform(x):
+    import numpy as np
+    import math
+    result = []
+    for val in x:
+        term1 = np.exp(-val**2)
+        term2 = math.sin(val) * math.cos(val**3)
+        term3 = np.log1p(abs(val))
+        result.append(term1 * term2 + term3)
+    return result
+
+# data example
+data = [0.5, 1.0, -0.3, 2.4, -1.5]
+transformed = complex_transform(data)
+print(transformed)
+</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Visualization Placeholder</h2>
+    <div class="complex-chart" aria-label="Complex chart visualization placeholder">
+      <span>Visual Analytics Placeholder</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key Insights Overview</h2>
+    <ul class="nested-list">
+      <li>Multi-sensor normalization and smoothing critical for subsequent modeling accuracy.</li>
+      <li><span class="important">Hyperparameter tuning</span> yields measurable gains in predictive performance.</li>
+      <li>Evaluation employs multiple metrics complemented by confusion matrix examination.</li>
+      <li>Feature derivatives and temporal deltas add dimensions enhancing model interpretability.</li>
+      <li>Class imbalance handling remains central challenge in model optimization.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
+
